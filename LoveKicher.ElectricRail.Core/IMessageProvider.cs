@@ -12,6 +12,8 @@ namespace LoveKicher.ElectricRail.Core
     public interface IMessageProvider<T>
     {
         event EventHandler<MessageEventArgs<T>> MessageReceived;
+
+        void StartProcessing();
     }
 
 

@@ -11,12 +11,8 @@ namespace LoveKicher.ElectricRail.Core.Logging
     {
         private ILogProvider _provider;
 
-        internal static Logger _instance;
-
-        public Logger(ILogProvider provider)
+        internal Logger(ILogProvider provider)
         {
-            if (_instance == null)
-                _instance = this;
             _provider = provider;
         }
 

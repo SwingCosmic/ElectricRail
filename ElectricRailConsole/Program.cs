@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 using LoveKicher.ElectricRail.Core;
 using LoveKicher.ElectricRail.Core.Serialization;
 using LoveKicher.ElectricRail.Core.Logging;
+using Autofac;
+using LoveKicher.ElectricRail.Core.Logging.Providers;
 
 namespace ElectricRailConsole
 {
     class Program
     {
+
+
         class ConsoleMsgProvider : IMessageProvider<string>
         {
-            public event EventHandler<MessageEventArgs<string>> MessageReceived;
+            public  event EventHandler<MessageEventArgs<string>> MessageReceived;
 
             public bool IsRunning = false;
             public  void StartProcessing()
@@ -25,7 +29,7 @@ namespace ElectricRailConsole
                     var s = Console.ReadLine();
                     MessageReceived?.Invoke(this, new MessageEventArgs<string>
                     {
-                        Message = new MessageObject<string>("Standard Input", "String", new RawDataWrapper<string>(s))
+                        Message = new MessageObject<string>("Standard Input", s)
                     });
                 }
                 
@@ -36,18 +40,40 @@ namespace ElectricRailConsole
 
         static void Main(string[] args)
         {
-            var logger = LoggerFactory.CreateLogger("console");
-            //fake info
-            logger.AddLog(LogLevel.Warning, "破番茄", "http://localhost:12450/infotest");
-            var provider = new ConsoleMsgProvider();
-            provider.MessageReceived += (s, e) =>
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<IMessageProvider<string>>();
+            builder.RegisterType<ConsoleMsgProvider>().As<IMessageProvider<string>>();
+
+            builder.RegisterType<ILogProvider>();
+            builder.RegisterType<ConsoleLogProvider>().As<ILogProvider>();
+
+            var container = builder.Build();
+
+            using (var scope = container.BeginLifetimeScope())
             {
-                logger.AddLog(LogLevel.Info, e.Message.Content.Unwarp(), e.Message.Source);
-            };
-            provider.StartProcessing();
+                var logger = scope.Resolve<ILogProvider>();
+                var msgProvider = scope.Resolve<IMessageProvider<string>>();
+
+                msgProvider.MessageReceived += (s, e) =>
+                {
+                    logger.Log(LogLevel.Info, e.Message.Content.Unwarp(), e.Message.Source);
+                };
+
+                msgProvider.StartProcessing();
+            }
         }
 
+        //var logger = LoggerFactory.CreateLogger("console");
+        ////fake info
+        //logger.AddLog(LogLevel.Warning, "破番茄", "http://localhost:12450/infotest");
+        //var provider = new ConsoleMsgProvider();
+        //provider.MessageReceived += (s, e) =>
+        //{
+        //    logger.AddLog(LogLevel.Info, e.Message.Content.Unwarp(), e.Message.Source);
+        //};
+        //provider.StartProcessing();
 
-        
+
     }
 }

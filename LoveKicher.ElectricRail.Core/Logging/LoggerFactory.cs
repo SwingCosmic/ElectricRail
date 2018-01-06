@@ -17,7 +17,7 @@ namespace LoveKicher.ElectricRail.Core.Logging
                     var logger = new Logger(p);
                     return logger;
                 default:
-                    return null;
+                    throw new ArgumentException("无法识别的logger类型。", nameof(type));
             }
         }
     }

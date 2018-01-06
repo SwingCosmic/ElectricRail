@@ -36,7 +36,7 @@ namespace LoveKicher.ElectricRail.Core.Logging.Providers
                     Console.ForegroundColor = TimeForegroundColor;
                     Console.Write($"[{DateTime.Now}] ");
                     Console.ForegroundColor = PromptForegroundColor;
-                    Console.Write("Received from ");
+                    Console.Write("from ");
                     Console.ForegroundColor = SourceForegroundColor;
                     Console.WriteLine($"[{source}]:");
                     Console.ForegroundColor = ((Func<LogLevel, ConsoleColor>)(l =>
