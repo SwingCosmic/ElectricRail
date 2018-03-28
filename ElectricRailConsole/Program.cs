@@ -37,7 +37,7 @@ namespace ElectricRailConsole
         }
 
 
-
+       
         static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
@@ -47,7 +47,7 @@ namespace ElectricRailConsole
 
             builder.RegisterType<ILogProvider>();
             builder.RegisterType<ConsoleLogProvider>().As<ILogProvider>();
-
+            builder.Register(c => LoggerFactory.CreateLogger("console")).As<ILogProvider>();
             var container = builder.Build();
 
             using (var scope = container.BeginLifetimeScope())
