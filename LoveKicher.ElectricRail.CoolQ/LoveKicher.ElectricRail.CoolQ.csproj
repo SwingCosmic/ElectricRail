@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\CoolQLogLevel.cs" />
     <Compile Include="Constants\PrivateMessageType.cs" />
     <Compile Include="CoolQApi.cs" />
     <Compile Include="CoolQPlugin.cs" />

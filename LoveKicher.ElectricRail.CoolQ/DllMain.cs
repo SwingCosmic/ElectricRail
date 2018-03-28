@@ -18,7 +18,7 @@ namespace LoveKicher.ElectricRail.CoolQ
         {
             Debug.Print("框架DLL已经加载，正在初始化...");
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -26,16 +26,6 @@ namespace LoveKicher.ElectricRail.CoolQ
              Debug.Print((e.ExceptionObject as Exception).Message);
         }
 
-        //private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        //{
-        //    Assembly asm = null;
-        //    if (args.Name.ToLower().StartsWith(
-        //        "LoveKicher.ElectricRail.CoolQ".ToLower()))
-        //    {
-        //        asm = Assembly.LoadFile(PluginContext.Current.Api.GetAppDirectory());
-        //    }
-
-        //    return asm;
-        //}
+       
     }
 }

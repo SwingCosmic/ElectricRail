@@ -1,14 +1,27 @@
 ﻿
 
+using LoveKicher.ElectricRail.CoolQ.Constants;
+
 namespace LoveKicher.ElectricRail.CoolQ
 {
+    /// <summary>
+    /// 定义酷Q提供的API。
+    /// </summary>
     public interface ICoolQApi
     {
-        int AddLog(int 优先级, string 类型, string 内容);
+        /// <summary>增加酷Q运行日志</summary>
+        int AddLog(CoolQLogLevel 优先级, string 类型, string 内容);
+        /// <summary>撤回消息</summary>
         int DeleteMsg(long MsgId);
+        /// <summary>获取应用目录</summary>
         string GetAppDirectory();
+        /// <summary>获取Cookies，此接口需要严格授权</summary>
         string GetCookies();
+        /// <summary>获取CSRF（跨站请求伪造）防伪令牌，此接口需要严格授权</summary>
         int GetCsrfToken();
+        /// <summary>获取群列表。建议使用扩展方法中的GetGroupListEx，
+        /// 可以直接获得解码之后的对象列表。</summary>
+        /// <returns>一个Base64编码的字符串，需要进行解包</returns>
         string GetGroupList();
         string GetGroupMemberInfo(long 群号, long QQID);
         string GetGroupMemberInfoV2(long 群号, long QQID, bool 不使用缓存);

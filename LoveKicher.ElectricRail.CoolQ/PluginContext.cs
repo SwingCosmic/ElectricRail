@@ -1,4 +1,5 @@
 ﻿
+using LoveKicher.ElectricRail.CoolQ.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -69,10 +70,7 @@ namespace LoveKicher.ElectricRail.CoolQ
         public int ApiAuthCode { get; internal set; }
 
 
-        /// <summary>获取当前加载插件的酷Q API实例。
-        /// 对于框架模块内的代码来说，
-        /// 可以直接通过<see cref="ICoolQModule.Api"/>属性访问。
-        /// </summary>
+        /// <summary>获取当前加载插件的酷Q API实例。</summary>
         public static ICoolQApi Api { get; } = new CoolQApi();
 
         /// <summary>
@@ -95,7 +93,7 @@ namespace LoveKicher.ElectricRail.CoolQ
                     if (Directory.Exists(dir))
                     {
                         ComposeModules(dir);
-                        Api.AddLog(10, "模块加载", $"共加载{Modules.Count()}个模块");
+                        Api.AddLog(CoolQLogLevel.Info, "模块加载", $"共加载{Modules.Count()}个模块");
                     }
                     else
                     {
@@ -111,7 +109,7 @@ namespace LoveKicher.ElectricRail.CoolQ
             }
             catch (Exception e)
             {
-                Api.AddLog(20, "警告", "加载模块失败！" + e);
+                Api.AddLog(CoolQLogLevel.Warning, "警告", "加载模块失败！" + e);
             }
 
         }

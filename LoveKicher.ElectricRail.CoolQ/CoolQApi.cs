@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LoveKicher.ElectricRail.CoolQ.Native;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
+using LoveKicher.ElectricRail.CoolQ.Constants;
 
 namespace LoveKicher.ElectricRail.CoolQ
 {
@@ -22,9 +23,9 @@ namespace LoveKicher.ElectricRail.CoolQ
                 return c;
             }
         }
-        public int AddLog(int 优先级, string 类型, string 内容)
+        public int AddLog(CoolQLogLevel 优先级, string 类型, string 内容)
         {
-            return NativeMethods.CQ_addLog(AuthCode, 优先级, 类型, 内容);
+            return NativeMethods.CQ_addLog(AuthCode, (int)优先级, 类型, 内容);
         }
 
         public int SendPrivateMsg(long QQID, string msg)
